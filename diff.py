@@ -23,9 +23,9 @@ def lcs(seq1, seq2):
 
 
 def write(seq1, seq2, matrix):
-    RESET = '\033[0m'
-    GREEN = '\033[92m'
-    RED = '\033[91m'
+    RESET = '\33[0m'  # Reset style
+    ADD = '\33[32m'  # green
+    DEL = '\33[9;31m'  # striked out, red
 
     i = len(seq1) - 1
     j = len(seq2) - 1
@@ -35,10 +35,10 @@ def write(seq1, seq2, matrix):
             diff.append(seq1[i])
             i, j = i-1, j-1
         elif i > 0 and (j == 0 or matrix[i][j-1] < matrix[i-1][j]):
-            diff.append(RED + seq1[i] + RESET)
+            diff.append(DEL + seq1[i] + RESET)
             i -= 1
         else:
-            diff.append(GREEN + seq2[j] + RESET)
+            diff.append(ADD + seq2[j] + RESET)
             j -= 1
 
     print('\n'.join(reversed(diff)))
