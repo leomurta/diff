@@ -1,9 +1,32 @@
 import argparse
 
 
-def read(filename):
+def read(filename, grain):
+    seq = [None]
     with open(filename) as f:
-        return [None] + f.read().split('\n')
+        if grain == 'line':
+            seq += f.read().split('\n')
+        elif grain == 'word':
+            for line in f.read().split('\n'):
+                seq += [word for word in line.split(' ')] + ['\n']
+        else:  # grain == 'char'
+            seq += list(f.read())
+    return seq
+
+
+def write(seq, grain):
+    if grain == 'line':
+        print('\n'.join(seq))
+    elif grain == 'word':
+        line = []
+        for word in seq:
+            if '\n' not in word:
+                line.append(word)
+            elif line:
+                print(' '.join(line))
+                line = []
+    else:  # grain == 'char'
+        print(''.join(seq))
 
 
 def lcs(seq1, seq2):
@@ -22,38 +45,40 @@ def lcs(seq1, seq2):
     return matrix
 
 
-def write(seq1, seq2, matrix):
+def diff(seq1, seq2, matrix):
     RESET = '\33[0m'  # Reset style
     ADD = '\33[32m'  # green
     DEL = '\33[9;31m'  # striked out, red
 
     i = len(seq1) - 1
     j = len(seq2) - 1
-    diff = []
+    diff_seq = []
     while i > 0 or j > 0:
-        if i > 0 and j > 0 and seq1[i] == seq2[j]:
-            diff.append(seq1[i])
+        if i > 0 and j > 0 and seq1[i] == seq2[j]:  # Same
+            diff_seq.append(seq1[i])
             i, j = i-1, j-1
-        elif i > 0 and (j == 0 or matrix[i][j-1] < matrix[i-1][j]):
-            diff.append(DEL + seq1[i] + RESET)
+        elif i > 0 and (j == 0 or matrix[i][j-1] < matrix[i-1][j]):  # Deleted
+            diff_seq.append(DEL + seq1[i] + RESET)
             i -= 1
-        else:
-            diff.append(ADD + seq2[j] + RESET)
+        else:  # Added
+            diff_seq.append(ADD + seq2[j] + RESET)
             j -= 1
 
-    print('\n'.join(reversed(diff)))
+    return reversed(diff_seq)
 
 
 def main():
     parser = argparse.ArgumentParser(description='Compares two files.')
     parser.add_argument('file1', help='name of the first file')
     parser.add_argument('file2', help='name of the second file')
+    parser.add_argument('--grain', help='comparison granularity (defaults to line)', choices=['line', 'word', 'char'], default='line')
     args = parser.parse_args()
 
-    seq1 = read(args.file1)
-    seq2 = read(args.file2)
+    seq1 = read(args.file1, args.grain)
+    seq2 = read(args.file2, args.grain)
     matrix = lcs(seq1, seq2)
-    write(seq1, seq2, matrix)
+    diff_seq = diff(seq1, seq2, matrix)
+    write(diff_seq, args.grain)
 
 
 if __name__ == "__main__":
