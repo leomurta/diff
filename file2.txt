@@ -1,7 +1,7 @@
-Esse arquivo tem várias linhas
-As linhas têm várias palavras, e essa linha terá edição em palavras
-Cada palavra é composta por caracteres
-No segundo arquivo, farei adições abaixo dessa linha
-Adicionei uma linha aqui
-Mais uma linha adicionada
-E o algoritmo de diff deveria descobrir essas adições
+Lorem ipsum dolor
+eu vulputate magna.
+sit ame, consectetur
+Phasellus rutrum eros vitae
+sollicitudin tincidunt.
+Sed et tincidunt ligula.
+Donec sed mattis dolor,

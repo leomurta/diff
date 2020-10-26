@@ -1,8 +1,7 @@
-Esse arquivo tem várias linhas
-As linhas têm varias palavras, e essa linha terá edicão em algumas palavras
-Cada palavra é composta por caracteres
-O objetivo desse arquivo é testar o algoritmo de diff, e essa linha será deletada
-No segundo arquivo, farei adições abaixo dessa linha
-E o algoritmo de diff deveria descobrir essas adições
-E deveria também perceber que a linha acima é igual à última linha do segundo arquivo
-A única diferença entre elas é um newline, mas isso não é relevante
+Lorem ipsum dolor
+sit amet, consectetur
+adipiscing elit.
+Phasellus rutrum eros vitae
+sollicitudin tincidunt.
+Donec sed mattis dolor,
+eu vulputate magna.

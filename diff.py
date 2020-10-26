@@ -34,10 +34,7 @@ def lcs(seq1, seq2):
 
     for i in range(1, len(seq1)):
         for j in range(1, len(seq2)):
-            e1 = seq1[i]
-            e2 = seq2[j]
-
-            if e1 == e2:
+            if seq1[i] == seq2[j]:
                 matrix[i][j] = matrix[i-1][j-1] + 1
             else:
                 matrix[i][j] = max(matrix[i][j-1], matrix[i-1][j])
